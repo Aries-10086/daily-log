@@ -1,0 +1,36 @@
+name: Daily Commit
+
+on:
+  schedule:
+    # 每天 UTC 02:00 ≈ 北京时间 10:00
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Make a small change
+        run: |
+          mkdir -p logs
+          echo "$(date -u '+%Y-%m-%d %H:%M:%S UTC') - daily check-in" >> logs/activity.log
+
+      - name: Commit and push
+        run: |
+          git config user.name "Light-milk-tea"
+          git config user.email "175576084+Light-milk-tea@users.noreply.github.com"
+
+          git add logs/activity.log
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "chore: daily activity $(date -u '+%Y-%m-%d')"
+          git push
