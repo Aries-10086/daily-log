@@ -23,8 +23,8 @@ jobs:
 
       - name: Commit and push
         run: |
-          git config user.name "Light-milk-tea"
-          git config user.email "175576084+Light-milk-tea@users.noreply.github.com"
+          git config user.name "Aries-10086"
+          git config user.email "300777638+Aries-10086@users.noreply.github.com"
 
           git add logs/activity.log
           if git diff --staged --quiet; then
